@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Al Noor Loyalty - Create Account</title>
+
   <link rel="stylesheet" href="assets/style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -25,7 +28,7 @@
       Create your Al Noor Loyalty account.
     </p>
 
-    <form id="customerRegisterForm">
+    <form id="registerForm">
 
       <label for="fullName">Full Name</label>
       <input
@@ -71,7 +74,127 @@
 
 </div>
 
-<script src="assets/app.js"></script>
+
+<script>
+
+const SUPABASE_URL =
+  "https://fgarlyoqobopudfkifbp.supabase.co";
+
+const SUPABASE_KEY =
+  "PUT_YOUR_EXISTING_PUBLISHABLE_KEY_HERE";
+
+const client = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
+    }
+  }
+);
+
+
+document
+  .getElementById("registerForm")
+  .addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const name =
+      document.getElementById("fullName").value.trim();
+
+    const phone =
+      document.getElementById("phone").value.trim();
+
+    const email =
+      document.getElementById("email").value.trim().toLowerCase();
+
+    const message =
+      document.getElementById("registerMessage");
+
+    const button =
+      document.getElementById("registerBtn");
+
+
+    if (!name || !phone || !email) {
+
+      message.innerHTML =
+        `<div class="error-message">
+          Please complete all fields.
+        </div>`;
+
+      return;
+    }
+
+
+    button.disabled = true;
+    button.textContent = "Sending...";
+
+    message.innerHTML = "";
+
+
+    try {
+
+      const { data, error } =
+        await client.auth.signInWithOtp({
+
+          email: email,
+
+          options: {
+
+            shouldCreateUser: true,
+
+            emailRedirectTo:
+              window.location.origin +
+              "/alnoor-loyalty/customer-home.html",
+
+            data: {
+              full_name: name,
+              mobile: phone,
+              role: "customer"
+            }
+
+          }
+
+        });
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      message.innerHTML = `
+        <div class="success-message">
+          Account started successfully.<br><br>
+          Please check your email and tap the login link.
+        </div>
+      `;
+
+
+      button.textContent = "Email Sent ✓";
+
+
+    } catch (error) {
+
+      console.error("REGISTER ERROR:", error);
+
+      message.innerHTML = `
+        <div class="error-message">
+          ${error.message || "Something went wrong."}
+        </div>
+      `;
+
+      button.disabled = false;
+      button.textContent = "Create Account →";
+
+    }
+
+  });
+
+</script>
 
 </body>
 </html>
