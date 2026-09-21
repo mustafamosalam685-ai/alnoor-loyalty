@@ -7,25 +7,29 @@
 <link rel="manifest" href="manifest.webmanifest">
 <title>Al Noor Loyalty</title>
 <link rel="stylesheet" href="assets/style.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="https://unpkg.com/html5-qrcode"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode"></script>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}body{background:#f6f1e6;color:#123d2e;font-family:Arial,sans-serif}.customer-entry{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:28px 18px}.entry-card{width:min(100%,560px);background:rgba(255,255,255,.9);border:1px solid #dfd4bd;border-radius:34px;padding:34px 24px 28px;box-shadow:0 18px 55px rgba(24,51,40,.10);text-align:center}.brand-sun{width:86px;height:86px;border:2px solid #c8a45b;border-radius:50%;display:grid;place-items:center;margin:0 auto 16px;background:#fffdf8;font-size:44px}.brand-title{margin:0;font-family:Georgia,serif;font-size:44px;letter-spacing:2px;color:#0b4b38}.brand-sub{display:block;margin-top:7px;color:#c19b52;letter-spacing:7px;font-size:13px;font-weight:700}.entry-card h2{font-family:Georgia,serif;font-size:32px;margin:34px 0 10px;color:#0b4b38}.entry-card p{font-size:17px;line-height:1.55;color:#68756f;margin:0 auto 26px;max-width:430px}.entry-actions{display:grid;gap:14px}.entry-btn{display:flex;align-items:center;justify-content:center;min-height:60px;border-radius:18px;padding:0 20px;text-decoration:none;font-size:18px;font-weight:700;transition:.2s}.entry-btn.primary{background:#07543e;color:#fff}.entry-btn.secondary{background:#eef0eb;color:#0b4b38;border:1px solid #dce1da}.entry-note{margin-top:22px;font-size:13px;color:#8b8b81}.entry-footer{margin-top:24px;font-size:11px;letter-spacing:3px;color:#b39151}@media(max-width:430px){.customer-entry{padding:18px 14px}.entry-card{padding:28px 18px 24px;border-radius:30px}.brand-title{font-size:39px}.entry-card h2{font-size:29px}.entry-card p{font-size:16px}.entry-btn{min-height:58px}}
+</style>
 </head>
-<body data-page="">
-
-<main class="container">
-<div class="auth" style="min-height:calc(100vh - 48px);padding:0;background:transparent">
-<div class="authbox center">
-<div class="logo"><div class="sun">☀</div><h1>AL NOOR</h1><small>LOYALTY</small></div>
-<h2>More Than Points</h2>
-<p class="sub">A simple loyalty experience for Al Noor customers, staff and management.</p>
-<div class="grid" style="margin-top:22px">
-<a class="btn primary block" href="customer-login.html">Customer Experience</a>
-<a class="btn soft block" href="staff-login.html">Staff Portal</a>
-<a class="btn gold block" href="gm-login.html">GM / Admin</a>
+<body data-page="customer-entry">
+<main class="customer-entry">
+<section class="entry-card" aria-label="Al Noor Loyalty Customer">
+<div class="brand-sun">☀️</div>
+<h1 class="brand-title">AL NOOR</h1>
+<span class="brand-sub">LOYALTY</span>
+<h2>Welcome to Al Noor Loyalty</h2>
+<p>Your loyalty card, points, rewards and special offers — all in one place.</p>
+<div class="entry-actions">
+<a class="entry-btn primary" href="customer-login.html">Customer Login <span aria-hidden="true">→</span></a>
+<a class="entry-btn secondary" href="customer-register.html">Create Loyalty Account <span aria-hidden="true">→</span></a>
 </div>
-<div class="note">One system • One database • Customer, Staff and GM portals connected to the same Al Noor Loyalty account.</div>
-</div></div>
+<div class="entry-note">For Al Noor customers</div>
+<div class="entry-footer">AL NOOR • MODERN BAKERY &amp; CAFÉ</div>
+</section>
 </main>
-
 <script src="assets/app.js"></script>
 </body>
 </html>
