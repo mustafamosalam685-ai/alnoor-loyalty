@@ -1,1 +1,28 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rewards • Al Noor Loyalty</title><link rel="stylesheet" href="assets/style.css"></head><body><header class="topbar"><a class="brand" href="customer-home.html"><span class="sun">☀</span><span>AL NOOR<small>LOYALTY</small></span></a><button class="icon">♧</button></header><main class="container"><h1 class="title">Rewards</h1><p class="sub">Use your points for rewards.</p><div class="card"><div class="reward"><div class="food">☕</div><div class="grow"><strong>Free Coffee</strong><small>500 points</small></div><button class="btn primary" data-redeem="500" data-name="Free Coffee">Redeem</button></div><div class="reward"><div class="food">🥪</div><div class="grow"><strong>Free Sandwich</strong><small>750 points</small></div><button class="btn primary" data-redeem="750" data-name="Free Sandwich">Redeem</button></div><div class="reward"><div class="food">🍰</div><div class="grow"><strong>Free Dessert</strong><small>1,000 points</small></div><button class="btn primary" data-redeem="1000" data-name="Free Dessert">Redeem</button></div><div class="reward"><div class="food">🎁</div><div class="grow"><strong>Special Offer</strong><small>1,500 points</small></div><button class="btn primary" data-redeem="1500" data-name="Special Offer">Redeem</button></div></div></main><div class="nav"><div class="navin"><a class="" href="customer-home.html"><b>⌂</b>Home</a><a class="" href="customer-card.html"><b>▣</b>Card</a><a class="active" href="customer-rewards.html"><b>♔</b>Rewards</a><a class="" href="customer-profile.html"><b>●</b>Profile</a></div></div><script src="assets/app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#073a2b">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Rewards</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body data-page="customer-rewards">
+
+<header class="topbar">
+<a class="brand" href="customer-home.html"><span class="sun">☀</span><span>AL NOOR<small>LOYALTY</small></span></a>
+<button class="icon" onclick="logout()" title="Sign out">↪</button>
+</header>
+<main class="container">
+<h1 class="title">Rewards</h1><p class="sub">Available rewards from Al Noor.</p>
+<div id="rewards" class="card"><div class="empty">Loading rewards…</div></div>
+</main>
+<nav class="nav"><div class="navin"><a href="customer-home.html" class="active"><b>⌂</b>Home</a>
+<a href="customer-card.html"><b>▣</b>Card</a>
+<a href="customer-rewards.html"><b>★</b>Rewards</a>
+<a href="customer-profile.html"><b>●</b>Profile</a></div></nav>
+<script src="assets/app.js"></script>
+</body>
+</html>
