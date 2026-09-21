@@ -1,6 +1,6 @@
 
 const SUPABASE_URL = "https://fgarlyoqobopudfkifbp.supabase.co";
-const SUPABASE_KEY = "sb_publishable_hmDY0Nch_M_WPIMRXW26-HA_eaLaVZcY";
+const SUPABASE_KEY = "sb_publishable_hmDY0NchM_WPIMRXW26-HA_eaLaVZcY";
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: {
@@ -98,6 +98,91 @@ function routeForRole(role) {
   return "customer-home.html";
 }
 
+function normalizeUaePhone(raw) {
+  let phone = String(raw || "").replace(/[^0-9+]/g, "");
+  if (phone.startsWith("00971")) phone = "+" + phone.slice(2);
+  if (phone.startsWith("05")) phone = "+971" + phone.slice(1);
+  if (/^9715\d{8}$/.test(phone)) phone = "+" + phone;
+  return phone;
+}
+
+async function finishCustomerOtp(msg) {
+  for (let i = 0; i < 6; i++) {
+    try {
+      const profile = await getProfile();
+      if (profile) {
+        if (profile.role !== "customer") {
+          await sb.auth.signOut();
+          throw new Error("This account is not registered as a customer.");
+        }
+        msg.textContent = "Verified. Opening your loyalty account…";
+        setTimeout(() => location.href = "customer-home.html", 350);
+        return;
+      }
+    } catch (e) {
+      if (i === 5) throw e;
+    }
+    await new Promise(r => setTimeout(r, 700));
+  }
+  throw new Error("Your loyalty profile is still being created. Please try again.");
+}
+
+async function sendCustomerOtp(mode) {
+  const msg = $("msg");
+  const phone = normalizeUaePhone($("phone")?.value);
+  const name = $("name")?.value.trim();
+
+  if (!/^\+9715\d{8}$/.test(phone)) {
+    msg.textContent = "Enter a valid UAE mobile number, for example 0501234567.";
+    return;
+  }
+  if (mode === "register" && !name) {
+    msg.textContent = "Enter your full name.";
+    return;
+  }
+
+  msg.textContent = "Sending verification code…";
+  const options = mode === "register"
+    ? { shouldCreateUser: true, data: { full_name: name } }
+    : { shouldCreateUser: false };
+
+  const { error } = await sb.auth.signInWithOtp({ phone, options });
+  if (error) {
+    msg.textContent = error.message;
+    return;
+  }
+
+  $("phone").value = phone;
+  $("otpBox")?.classList.remove("hidden");
+  $("sendOtpBtn")?.classList.add("hidden");
+  $("verifyOtpBtn")?.classList.remove("hidden");
+  msg.textContent = "Code sent by SMS. Enter it below.";
+}
+
+async function verifyCustomerOtp() {
+  const msg = $("msg");
+  const phone = normalizeUaePhone($("phone")?.value);
+  const token = $("otp")?.value.trim();
+
+  if (!/^\+9715\d{8}$/.test(phone) || !/^\d{6}$/.test(token)) {
+    msg.textContent = "Enter the 6-digit verification code.";
+    return;
+  }
+
+  msg.textContent = "Verifying…";
+  const { error } = await sb.auth.verifyOtp({ phone, token, type: "sms" });
+  if (error) {
+    msg.textContent = error.message;
+    return;
+  }
+
+  try {
+    await finishCustomerOtp(msg);
+  } catch (e) {
+    msg.textContent = e.message || "Verification completed, but your profile is not ready yet.";
+  }
+}
+
 async function login(role) {
   const email = $("email")?.value.trim().toLowerCase();
   const password = $("password")?.value;
@@ -132,57 +217,6 @@ async function login(role) {
   } catch (e) {
     if (msg) msg.textContent = e.message || "Login failed.";
   }
-}
-
-async function registerCustomer() {
-  const name = $("name")?.value.trim();
-  const phone = $("phone")?.value.trim();
-  const email = $("email")?.value.trim().toLowerCase();
-  const password = $("password")?.value;
-  const confirm = $("confirm")?.value;
-  const msg = $("msg");
-
-  if (!name || !phone || !email || !password) {
-    msg.textContent = "Please complete all required fields.";
-    return;
-  }
-
-  if (password.length < 6) {
-    msg.textContent = "Password must be at least 6 characters.";
-    return;
-  }
-
-  if (password !== confirm) {
-    msg.textContent = "Passwords do not match.";
-    return;
-  }
-
-  msg.textContent = "Creating your Al Noor account…";
-
-  const { data, error } = await sb.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        full_name: name,
-        phone: phone
-      }
-    }
-  });
-
-  if (error) {
-    msg.textContent = error.message;
-    return;
-  }
-
-  if (!data.session) {
-    msg.textContent =
-      "Account created. Check your email to confirm the account, then sign in.";
-    return;
-  }
-
-  msg.textContent = "Account created. Opening your loyalty card…";
-  setTimeout(() => location.href = "customer-home.html", 500);
 }
 
 async function logout() {
@@ -695,9 +729,11 @@ async function init() {
   const page = document.body.dataset.page;
   try {
     if (page === "customer-login") {
-      $("loginBtn").onclick = () => login("customer");
+      $("sendOtpBtn").onclick = () => sendCustomerOtp("login");
+      $("verifyOtpBtn").onclick = verifyCustomerOtp;
     } else if (page === "customer-register") {
-      $("registerBtn").onclick = registerCustomer;
+      $("sendOtpBtn").onclick = () => sendCustomerOtp("register");
+      $("verifyOtpBtn").onclick = verifyCustomerOtp;
     } else if (page === "customer-home") {
       await loadCustomerHome();
     } else if (page === "customer-card") {
