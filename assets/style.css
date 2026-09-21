@@ -190,3 +190,188 @@ h2{color:var(--green);margin-bottom:8px}
 }
 
 .hidden{display:none !important}
+/* =========================================
+   CUSTOMER AUTH - MOBILE FIX
+   ========================================= */
+
+.auth-page {
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 35px 20px 60px;
+  background: #f7f4ec;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.auth-logo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.logo-mark {
+  font-size: 42px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.logo-name {
+  color: #20352d;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.logo-sub {
+  color: #20352d;
+  font-size: 20px;
+  letter-spacing: 3px;
+  margin-top: 3px;
+}
+
+.auth-card h1 {
+  color: #1e2b26;
+  font-size: 42px;
+  line-height: 1.1;
+  margin: 0 0 18px;
+  text-align: center;
+}
+
+.auth-description {
+  color: #34423c;
+  font-size: 17px;
+  line-height: 1.5;
+  text-align: center;
+  margin: 0 0 30px;
+}
+
+/* IMPORTANT: labels and inputs must be vertical */
+.auth-card form {
+  display: block !important;
+  width: 100%;
+}
+
+.auth-card form label {
+  display: block !important;
+  width: 100%;
+  margin: 0 0 8px;
+  color: #26352f;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.auth-card form input {
+  display: block !important;
+  width: 100% !important;
+  height: 52px;
+  box-sizing: border-box;
+  margin: 0 0 18px !important;
+  padding: 0 16px;
+  border: 1px solid #d8d5cc;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1e2b26;
+  font-size: 16px;
+  outline: none;
+}
+
+.auth-card form input:focus {
+  border-color: #6f815f;
+  box-shadow: 0 0 0 3px rgba(111, 129, 95, 0.12);
+}
+
+.auth-card form button {
+  display: block;
+  width: 100%;
+  min-height: 54px;
+  box-sizing: border-box;
+  margin-top: 8px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 14px;
+  background: #6f815f;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-card form button:disabled {
+  opacity: 0.65;
+}
+
+.auth-footer {
+  text-align: center;
+  color: #34423c;
+  font-size: 15px;
+  line-height: 1.5;
+  margin-top: 24px;
+}
+
+.auth-footer a {
+  color: #637650;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.success-message,
+.error-message {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.success-message {
+  background: #e9f1e5;
+  color: #31512f;
+}
+
+.error-message {
+  background: #f8e7e5;
+  color: #8a3028;
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+
+  .auth-page {
+    padding: 28px 18px 50px;
+  }
+
+  .auth-card {
+    max-width: 100%;
+  }
+
+  .logo-name {
+    font-size: 27px;
+  }
+
+  .logo-sub {
+    font-size: 17px;
+  }
+
+  .auth-card h1 {
+    font-size: 36px;
+  }
+
+  .auth-description {
+    font-size: 16px;
+  }
+
+  .auth-card form input {
+    height: 50px;
+    font-size: 16px;
+  }
+}
