@@ -1,0 +1,1 @@
+AL NOOR LOYALTY UI V2 - visual redesign only. Supabase integration comes after UI approval.
