@@ -199,6 +199,13 @@ async function loadCustomerHome() {
   document.querySelectorAll("[data-name]").forEach(e => e.textContent = profile.full_name || "Customer");
   document.querySelectorAll("[data-points]").forEach(e => e.textContent = moneyPoints(profile.points));
   document.querySelectorAll("[data-id]").forEach(e => e.textContent = profile.member_id || "—");
+  window.__alnoorProfileToken = profile.loyalty_token || null;
+
+  const homeQr = $("homeQr");
+  if (homeQr && typeof QRCode !== "undefined" && profile.loyalty_token) {
+    homeQr.innerHTML = "";
+    new QRCode(homeQr, { text: String(profile.loyalty_token), width: 245, height: 245, colorDark: "#111111", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+  }
 
   const avatar = $("avatar");
   if (avatar) avatar.textContent = initials(profile.full_name);
