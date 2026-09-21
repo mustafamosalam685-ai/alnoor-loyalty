@@ -67,3 +67,80 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al Noor Loyalty - Create Account</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+
+<div class="auth-page">
+
+  <div class="auth-card">
+
+    <div class="auth-logo">
+      <div class="logo-mark">☀️</div>
+      <div class="logo-name">AL NOOR</div>
+      <div class="logo-sub">LOYALTY</div>
+    </div>
+
+    <h1>Create Account</h1>
+
+    <p class="auth-description">
+      Create your Al Noor Loyalty account.
+    </p>
+
+    <form id="customerRegisterForm">
+
+      <label for="fullName">Full Name</label>
+      <input
+        id="fullName"
+        type="text"
+        placeholder="Enter your full name"
+        autocomplete="name"
+        required
+      >
+
+      <label for="phone">Mobile Number</label>
+      <input
+        id="phone"
+        type="tel"
+        placeholder="05XXXXXXXX"
+        autocomplete="tel"
+        required
+      >
+
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        placeholder="Enter your email"
+        autocomplete="email"
+        required
+      >
+
+      <button type="submit" id="registerBtn">
+        Create Account →
+      </button>
+
+    </form>
+
+    <div id="registerMessage"></div>
+
+    <p class="auth-footer">
+      Already have an account?
+      <a href="customer-login.html">Login</a>
+    </p>
+
+  </div>
+
+</div>
+
+<script src="assets/app.js"></script>
+
+</body>
+</html>
