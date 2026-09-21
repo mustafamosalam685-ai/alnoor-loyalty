@@ -778,3 +778,148 @@ async function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+// ===============================
+// CUSTOMER PASSWORDLESS AUTH
+// ===============================
+
+const customerRegisterForm =
+  document.getElementById("customerRegisterForm");
+
+const customerLoginForm =
+  document.getElementById("customerLoginForm");
+
+
+// CUSTOMER REGISTER
+if (customerRegisterForm) {
+
+  customerRegisterForm.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+    const fullName =
+      document.getElementById("fullName").value.trim();
+
+    const phone =
+      document.getElementById("phone").value.trim();
+
+    const email =
+      document.getElementById("email").value.trim().toLowerCase();
+
+    const message =
+      document.getElementById("registerMessage");
+
+    const button =
+      document.getElementById("registerBtn");
+
+    button.disabled = true;
+    button.textContent = "Creating Account...";
+
+    try {
+
+      // Create Supabase account WITHOUT password
+      const { data, error } =
+        await supabase.auth.signUp({
+          email: email,
+          options: {
+            data: {
+              full_name: fullName,
+              phone: phone,
+              role: "customer"
+            }
+          }
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      message.innerHTML = `
+        <div class="success-message">
+          Account created successfully.<br><br>
+          Please check your email and confirm your account.
+        </div>
+      `;
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.innerHTML = `
+        <div class="error-message">
+          ${error.message}
+        </div>
+      `;
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent = "Create Account →";
+
+    }
+
+  });
+
+}
+
+
+// CUSTOMER LOGIN - MAGIC LINK
+if (customerLoginForm) {
+
+  customerLoginForm.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+    const email =
+      document.getElementById("loginEmail").value.trim().toLowerCase();
+
+    const message =
+      document.getElementById("loginMessage");
+
+    const button =
+      document.getElementById("loginBtn");
+
+    button.disabled = true;
+    button.textContent = "Sending...";
+
+    try {
+
+      const { error } =
+        await supabase.auth.signInWithOtp({
+          email: email,
+          options: {
+            emailRedirectTo:
+              window.location.origin + "/customer-home.html"
+          }
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      message.innerHTML = `
+        <div class="success-message">
+          Login link sent!<br><br>
+          Check your email and tap the link to continue.
+        </div>
+      `;
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.innerHTML = `
+        <div class="error-message">
+          ${error.message}
+        </div>
+      `;
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent = "Send Login Link →";
+
+    }
+
+  });
+
+}
