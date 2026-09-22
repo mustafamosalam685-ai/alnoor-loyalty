@@ -3,198 +3,342 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Al Noor Loyalty - Create Account</title>
 
-  <link rel="stylesheet" href="assets/style.css">
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f3e9;
+      color: #20352e;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+      padding: 30px 20px 50px;
+    }
+
+    .brand {
+      text-align: center;
+      color: #b59a63;
+      letter-spacing: 4px;
+      font-size: 18px;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 42px;
+      margin: 0 0 12px;
+      font-weight: 600;
+      color: #18372d;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #68716d;
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 35px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+
+    label {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: #68716d;
+      margin-bottom: 9px;
+      margin-top: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    label:first-child {
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      height: 58px;
+      border: 1px solid #d5d5d0;
+      border-radius: 15px;
+      padding: 0 17px;
+      font-size: 17px;
+      outline: none;
+      background: #fff;
+      color: #20352e;
+    }
+
+    input:focus {
+      border-color: #7d8f6b;
+      box-shadow: 0 0 0 3px rgba(125,143,107,0.12);
+    }
+
+    button {
+      width: 100%;
+      height: 62px;
+      margin-top: 28px;
+      border: none;
+      border-radius: 17px;
+      background: #7d8f6b;
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    .message {
+      display: none;
+      margin-top: 20px;
+      padding: 17px;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .success {
+      display: block;
+      background: #edf5ed;
+      color: #315c3b;
+    }
+
+    .error {
+      display: block;
+      background: #f8e9e7;
+      color: #91463d;
+    }
+
+    .login {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 16px;
+      color: #68716d;
+    }
+
+    .login a {
+      color: #657956;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      color: #858984;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 18px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="auth-page">
+  <main class="page">
 
-  <div class="auth-card">
-
-    <div class="auth-logo">
-      <div class="logo-mark">☀️</div>
-      <div class="logo-name">AL NOOR</div>
-      <div class="logo-sub">LOYALTY</div>
+    <div class="brand">
+      AL NOOR
     </div>
 
     <h1>Create Account</h1>
 
-    <p class="auth-description">
+    <div class="subtitle">
       Create your Al Noor Loyalty account.
-    </p>
+    </div>
 
-    <form id="registerForm">
+    <section class="card">
 
-      <label for="fullName">Full Name</label>
-      <input
-        id="fullName"
-        type="text"
-        placeholder="Enter your full name"
-        autocomplete="name"
-        required
-      >
+      <form id="registerForm">
 
-      <label for="phone">Mobile Number</label>
-      <input
-        id="phone"
-        type="tel"
-        placeholder="05XXXXXXXX"
-        autocomplete="tel"
-        required
-      >
+        <label for="fullName">Full Name</label>
+        <input
+          id="fullName"
+          type="text"
+          placeholder="Your full name"
+          autocomplete="name"
+          required
+        >
 
-      <label for="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        placeholder="Enter your email"
-        autocomplete="email"
-        required
-      >
+        <label for="mobile">Mobile Number</label>
+        <input
+          id="mobile"
+          type="tel"
+          placeholder="050 000 0000"
+          autocomplete="tel"
+          required
+        >
 
-      <button type="submit" id="registerBtn">
-        Create Account →
-      </button>
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+        >
 
-    </form>
+        <button id="createBtn" type="submit">
+          Create Account →
+        </button>
 
-    <div id="registerMessage"></div>
+      </form>
 
-    <p class="auth-footer">
-      Already have an account?
-      <a href="customer-login.html">Login</a>
-    </p>
+      <div id="message" class="message"></div>
 
-  </div>
+      <div class="login">
+        Already have an account?
+        <a href="customer-login.html">Login</a>
+      </div>
 
-</div>
+      <div class="note">
+        After creating your account, we'll send a secure login link to your email.
+      </div>
 
+    </section>
 
-<script>
-
-const SUPABASE_URL =
-  "https://fgarlyoqobopudfkifbp.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_pqRr71EgFfQTokW0u6fPgQ_g1pG8vdM";
-
-const client = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY,
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true
-    }
-  }
-);
+  </main>
 
 
-document
-  .getElementById("registerForm")
-  .addEventListener("submit", async function(event) {
+  <script>
 
-    event.preventDefault();
+    // ==============================
+    // SUPABASE SETTINGS
+    // ==============================
 
-    const name =
-      document.getElementById("fullName").value.trim();
+    const SUPABASE_URL =
+      "https://fgarlyoqobopudfkifbp.supabase.co";
 
-    const phone =
-      document.getElementById("phone").value.trim();
-
-    const email =
-      document.getElementById("email").value.trim().toLowerCase();
-
-    const message =
-      document.getElementById("registerMessage");
-
-    const button =
-      document.getElementById("registerBtn");
+    const SUPABASE_KEY =
+      "sb_publishable_pqRr71EgFfQTokW0u6fPgQ_g1pG8vdM";
 
 
-    if (!name || !phone || !email) {
+    // ==============================
+    // SUPABASE CLIENT
+    // ==============================
 
-      message.innerHTML =
-        `<div class="error-message">
-          Please complete all fields.
-        </div>`;
-
-      return;
-    }
-
-
-    button.disabled = true;
-    button.textContent = "Sending...";
-
-    message.innerHTML = "";
+    const client = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
 
-    try {
+    // ==============================
+    // REGISTER
+    // ==============================
 
-      const { data, error } =
-        await client.auth.signInWithOtp({
-
-          email: email,
-
-          options: {
-
-            shouldCreateUser: true,
-
-            emailRedirectTo:
-              window.location.origin +
-              "/alnoor-loyalty/customer-home.html",
-
-            data: {
-              full_name: name,
-              mobile: phone,
-              role: "customer"
-            }
-
-          }
-
-        });
+    const form = document.getElementById("registerForm");
+    const button = document.getElementById("createBtn");
+    const message = document.getElementById("message");
 
 
-      if (error) {
-        throw error;
+    form.addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+      message.className = "message";
+      message.textContent = "";
+
+      const fullName =
+        document.getElementById("fullName").value.trim();
+
+      const mobile =
+        document.getElementById("mobile").value.trim();
+
+      const email =
+        document.getElementById("email").value.trim().toLowerCase();
+
+
+      if (!fullName || !mobile || !email) {
+
+        message.textContent =
+          "Please complete all fields.";
+
+        message.className = "message error";
+
+        return;
       }
 
 
-      message.innerHTML = `
-        <div class="success-message">
-          Account started successfully.<br><br>
-          Please check your email and tap the login link.
-        </div>
-      `;
+      button.disabled = true;
+      button.textContent = "Creating Account...";
 
 
-      button.textContent = "Email Sent ✓";
+      try {
+
+        const redirectUrl =
+          window.location.origin +
+          "/alnoor-loyalty/customer-home.html";
 
 
-    } catch (error) {
+        const { data, error } =
+          await client.auth.signInWithOtp({
 
-      console.error("REGISTER ERROR:", error);
+            email: email,
 
-      message.innerHTML = `
-        <div class="error-message">
-          ${error.message || "Something went wrong."}
-        </div>
-      `;
+            options: {
+              emailRedirectTo: redirectUrl,
 
-      button.disabled = false;
-      button.textContent = "Create Account →";
+              data: {
+                full_name: fullName,
+                mobile: mobile
+              }
+            }
 
-    }
+          });
 
-  });
 
-</script>
+        if (error) {
+          throw error;
+        }
+
+
+        message.innerHTML =
+          "Account request received.<br><br>" +
+          "Please check your email and click the secure login link.";
+
+        message.className = "message success";
+
+        button.textContent = "Email Sent ✓";
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          error.message || "Something went wrong.";
+
+        message.className = "message error";
+
+        button.disabled = false;
+        button.textContent = "Create Account →";
+
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>
