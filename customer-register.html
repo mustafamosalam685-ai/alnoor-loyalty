@@ -1,344 +1,518 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Al Noor Loyalty - Create Account</title>
 
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
-      background: #f7f3e9;
-      color: #20352e;
+      background:
+        linear-gradient(rgba(54, 43, 30, 0.08), rgba(54, 43, 30, 0.08)),
+        #f7f3eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #3f3529;
     }
 
-    .page {
+    .container {
       width: 100%;
-      max-width: 520px;
-      margin: auto;
-      padding: 30px 20px 50px;
-    }
-
-    .brand {
-      text-align: center;
-      color: #b59a63;
-      letter-spacing: 4px;
-      font-size: 18px;
-      margin-bottom: 28px;
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 42px;
-      margin: 0 0 12px;
-      font-weight: 600;
-      color: #18372d;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #68716d;
-      font-size: 18px;
-      line-height: 1.5;
-      margin-bottom: 35px;
+      max-width: 430px;
     }
 
     .card {
       background: #ffffff;
-      border-radius: 30px;
-      padding: 30px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      border-radius: 24px;
+      padding: 35px 28px;
+      box-shadow: 0 12px 40px rgba(60, 45, 30, 0.12);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo-main {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: #6f7d42;
+    }
+
+    .logo-sub {
+      margin-top: 5px;
+      font-size: 12px;
+      letter-spacing: 4px;
+      color: #8b765d;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 25px;
+      margin-bottom: 8px;
+      color: #3f3529;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #8a8177;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
     }
 
     label {
       display: block;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
-      color: #68716d;
-      margin-bottom: 9px;
-      margin-top: 20px;
-      letter-spacing: 0.5px;
-    }
-
-    label:first-child {
-      margin-top: 0;
+      margin-bottom: 8px;
+      color: #4d4032;
     }
 
     input {
       width: 100%;
-      height: 58px;
-      border: 1px solid #d5d5d0;
-      border-radius: 15px;
-      padding: 0 17px;
-      font-size: 17px;
-      outline: none;
+      height: 52px;
+      border: 1px solid #ddd6cc;
+      border-radius: 13px;
+      padding: 0 15px;
+      font-size: 15px;
+      color: #3f3529;
       background: #fff;
-      color: #20352e;
+      outline: none;
+      transition: 0.2s;
     }
 
     input:focus {
-      border-color: #7d8f6b;
-      box-shadow: 0 0 0 3px rgba(125,143,107,0.12);
+      border-color: #7d8d4b;
+      box-shadow: 0 0 0 3px rgba(125, 141, 75, 0.10);
     }
 
-    button {
+    input::placeholder {
+      color: #aaa29a;
+    }
+
+    .btn {
       width: 100%;
-      height: 62px;
-      margin-top: 28px;
+      height: 54px;
       border: none;
-      border-radius: 17px;
-      background: #7d8f6b;
+      border-radius: 14px;
+      background: #748447;
       color: white;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
+      margin-top: 8px;
+      transition: 0.2s;
     }
 
-    button:disabled {
-      opacity: 0.65;
-      cursor: wait;
+    .btn:hover {
+      background: #65753b;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .message {
       display: none;
-      margin-top: 20px;
-      padding: 17px;
-      border-radius: 15px;
+      margin-top: 18px;
+      padding: 13px;
+      border-radius: 12px;
       text-align: center;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.5;
     }
 
     .success {
       display: block;
-      background: #edf5ed;
-      color: #315c3b;
+      background: #eef6e7;
+      color: #536b35;
     }
 
     .error {
       display: block;
-      background: #f8e9e7;
-      color: #91463d;
+      background: #fff0ee;
+      color: #a14336;
     }
 
-    .login {
+    .login-link {
       text-align: center;
-      margin-top: 28px;
-      font-size: 16px;
-      color: #68716d;
+      margin-top: 23px;
+      font-size: 14px;
+      color: #82796f;
     }
 
-    .login a {
-      color: #657956;
+    .login-link a {
+      color: #6f7d42;
       font-weight: 700;
       text-decoration: none;
     }
 
-    .note {
+    .secure-note {
       text-align: center;
-      color: #858984;
-      font-size: 13px;
+      margin-top: 20px;
+      font-size: 12px;
       line-height: 1.5;
+      color: #a19a92;
+    }
+
+    .footer {
+      text-align: center;
       margin-top: 18px;
+      font-size: 11px;
+      color: #a69e95;
     }
   </style>
 </head>
 
 <body>
 
-  <main class="page">
+  <div class="container">
 
-    <div class="brand">
-      AL NOOR
-    </div>
+    <div class="card">
 
-    <h1>Create Account</h1>
+      <div class="logo">
+        <div class="logo-main">AL NOOR</div>
+        <div class="logo-sub">LOYALTY</div>
+      </div>
 
-    <div class="subtitle">
-      Create your Al Noor Loyalty account.
-    </div>
+      <h1>Create Account</h1>
 
-    <section class="card">
+      <p class="subtitle">
+        Join Al Noor Loyalty and start collecting points.
+      </p>
 
       <form id="registerForm">
 
-        <label for="fullName">Full Name</label>
-        <input
-          id="fullName"
-          type="text"
-          placeholder="Your full name"
-          autocomplete="name"
-          required
-        >
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
 
-        <label for="mobile">Mobile Number</label>
-        <input
-          id="mobile"
-          type="tel"
-          placeholder="050 000 0000"
-          autocomplete="tel"
-          required
-        >
+          <input
+            type="text"
+            id="fullName"
+            placeholder="Enter your full name"
+            required
+            autocomplete="name"
+          />
+        </div>
 
-        <label for="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          placeholder="you@example.com"
-          autocomplete="email"
-          required
-        >
 
-        <button id="createBtn" type="submit">
-          Create Account →
+        <div class="form-group">
+          <label for="mobile">Mobile Number</label>
+
+          <input
+            type="tel"
+            id="mobile"
+            placeholder="05XXXXXXXX"
+            required
+            autocomplete="tel"
+          />
+        </div>
+
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="example@email.com"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+
+        <button
+          type="submit"
+          class="btn"
+          id="registerButton"
+        >
+          Create Account
         </button>
 
       </form>
 
+
       <div id="message" class="message"></div>
 
-      <div class="login">
+
+      <div class="login-link">
         Already have an account?
         <a href="customer-login.html">Login</a>
       </div>
 
-      <div class="note">
-        After creating your account, we'll send a secure login link to your email.
+
+      <div class="secure-note">
+        A secure login link will be sent to your email.
+        <br />
+        No password is required.
       </div>
 
-    </section>
-
-  </main>
+    </div>
 
 
-  <script>
+    <div class="footer">
+      © Al Noor Modern Bakery
+    </div>
 
-    // ==============================
-    // SUPABASE SETTINGS
-    // ==============================
-
-    const SUPABASE_URL =
-      "https://fgarlyoqobopudfkifbp.supabase.co";
-
-    const SUPABASE_KEY =
-      "sb_publishable_pqRr71EgFfQTokW0u6fPgQ_g1pG8vdM";
+  </div>
 
 
-    // ==============================
-    // SUPABASE CLIENT
-    // ==============================
+<script>
 
-    const client = window.supabase.createClient(
+  /* =====================================================
+     SUPABASE CONFIGURATION
+     ===================================================== */
+
+  const SUPABASE_URL =
+    "https://fgarlyoqobopudfkifbp.supabase.co";
+
+  /*
+    IMPORTANT:
+    Put your FULL Supabase Publishable Key here.
+
+    It must start with:
+
+    sb_publishable_
+
+    DO NOT put sb_secret_ here.
+  */
+
+  const SUPABASE_KEY =
+    "sb_publishable_pqRr71EgFfQTokW0u6fPgQ_g1pG8vdM";
+
+
+  /* =====================================================
+     CREATE SUPABASE CLIENT
+     ===================================================== */
+
+  const supabaseClient =
+    window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
 
 
-    // ==============================
-    // REGISTER
-    // ==============================
+  /* =====================================================
+     ELEMENTS
+     ===================================================== */
 
-    const form = document.getElementById("registerForm");
-    const button = document.getElementById("createBtn");
-    const message = document.getElementById("message");
+  const form =
+    document.getElementById("registerForm");
 
+  const button =
+    document.getElementById("registerButton");
 
-    form.addEventListener("submit", async function(event) {
-
-      event.preventDefault();
-
-      message.className = "message";
-      message.textContent = "";
-
-      const fullName =
-        document.getElementById("fullName").value.trim();
-
-      const mobile =
-        document.getElementById("mobile").value.trim();
-
-      const email =
-        document.getElementById("email").value.trim().toLowerCase();
+  const message =
+    document.getElementById("message");
 
 
-      if (!fullName || !mobile || !email) {
+  /* =====================================================
+     MESSAGE FUNCTION
+     ===================================================== */
 
-        message.textContent =
-          "Please complete all fields.";
+  function showMessage(text, type) {
 
-        message.className = "message error";
+    message.textContent = text;
+
+    message.className =
+      "message " + type;
+
+  }
+
+
+  /* =====================================================
+     REGISTER
+     ===================================================== */
+
+  form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+
+    const fullName =
+      document.getElementById("fullName")
+        .value
+        .trim();
+
+    const mobile =
+      document.getElementById("mobile")
+        .value
+        .trim();
+
+    const email =
+      document.getElementById("email")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    /* ---------------------------------------------
+       BASIC VALIDATION
+       --------------------------------------------- */
+
+    if (!fullName) {
+
+      showMessage(
+        "Please enter your full name.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (!mobile) {
+
+      showMessage(
+        "Please enter your mobile number.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (!email) {
+
+      showMessage(
+        "Please enter your email address.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    /* ---------------------------------------------
+       BUTTON LOADING
+       --------------------------------------------- */
+
+    button.disabled = true;
+
+    button.textContent = "Creating Account...";
+
+
+    showMessage("", "");
+
+
+    try {
+
+      /* -------------------------------------------
+         SUPABASE MAGIC LINK
+         ------------------------------------------- */
+
+      const { data, error } =
+        await supabaseClient.auth.signInWithOtp({
+
+          email: email,
+
+          options: {
+
+            shouldCreateUser: true,
+
+            emailRedirectTo:
+              window.location.origin +
+              "/alnoor-loyalty/customer-home.html",
+
+            data: {
+
+              full_name: fullName,
+
+              phone: mobile
+
+            }
+
+          }
+
+        });
+
+
+      /* -------------------------------------------
+         ERROR
+         ------------------------------------------- */
+
+      if (error) {
+
+        console.error(
+          "Supabase Error:",
+          error
+        );
+
+        showMessage(
+          error.message,
+          "error"
+        );
+
+        button.disabled = false;
+
+        button.textContent =
+          "Create Account";
 
         return;
       }
 
 
-      button.disabled = true;
-      button.textContent = "Creating Account...";
+      /* -------------------------------------------
+         SUCCESS
+         ------------------------------------------- */
+
+      showMessage(
+        "Account created successfully. " +
+        "Please check your email and click the secure login link.",
+        "success"
+      );
 
 
-      try {
-
-        const redirectUrl =
-          window.location.origin +
-          "/alnoor-loyalty/customer-home.html";
+      button.textContent =
+        "Check Your Email";
 
 
-        const { data, error } =
-          await client.auth.signInWithOtp({
+      /* Keep form disabled after success */
 
-            email: email,
+    }
 
-            options: {
-              emailRedirectTo: redirectUrl,
+    catch (error) {
 
-              data: {
-                full_name: fullName,
-                mobile: mobile
-              }
-            }
+      console.error(
+        "Unexpected Error:",
+        error
+      );
 
-          });
+      showMessage(
+        "Something went wrong. Please try again.",
+        "error"
+      );
 
+      button.disabled = false;
 
-        if (error) {
-          throw error;
-        }
+      button.textContent =
+        "Create Account";
+    }
 
+  });
 
-        message.innerHTML =
-          "Account request received.<br><br>" +
-          "Please check your email and click the secure login link.";
-
-        message.className = "message success";
-
-        button.textContent = "Email Sent ✓";
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        message.textContent =
-          error.message || "Something went wrong.";
-
-        message.className = "message error";
-
-        button.disabled = false;
-        button.textContent = "Create Account →";
-
-      }
-
-    });
-
-  </script>
+</script>
 
 </body>
 </html>
